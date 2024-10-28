@@ -1,0 +1,84 @@
+Patient: King743, Bart73 Caleb651, Gender: male, Birth Date: 1991-06-13
+Condition: Received higher education (finding), Onset: 2009-08-06T04:44:50+00:00
+Condition: Full-time employment (finding), Onset: 2013-08-15T05:05:05+00:00
+Condition: Medication review due (situation), Onset: 2016-08-18T04:05:47+00:00
+Condition: Not in labor force (finding), Onset: 2016-08-18T05:01:59+00:00
+Condition: Reports of violence in the environment (finding), Onset: 2016-08-18T05:01:59+00:00
+Observation: Body Height, Value: 165
+Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 3
+Observation: Body Weight, Value: 60.5
+Observation: Body mass index (BMI) [Ratio], Value: 22.22
+Observation: Blood pressure panel with all children optional, Value: Unknown value
+Observation: Heart rate, Value: 96
+Observation: Respiratory rate, Value: 15
+Observation: Tobacco smoking status, Value: Unknown value
+Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value
+Observation: Patient Health Questionnaire 2 item (PHQ-2) total score [Reported], Value: 1
+Observation: Total score [DAST-10], Value: 2
+Condition: Infection of tooth (disorder), Onset: 2016-09-01T05:25:32+00:00
+Medication: Unknown medication, Dosage: Unknown dosage
+Condition: Viral sinusitis (disorder), Onset: 2017-07-05T23:05:47+00:00
+Medication: Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet, Dosage: Unknown dosage
+Condition: Full-time employment (finding), Onset: 2019-08-22T04:45:13+00:00
+Condition: Stress (finding), Onset: 2019-08-22T04:45:13+00:00
+Condition: Victim of intimate partner abuse (finding), Onset: 2019-08-22T04:45:13+00:00
+Observation: Body Height, Value: 165
+Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 2
+Observation: Body Weight, Value: 64.8
+Observation: Body mass index (BMI) [Ratio], Value: 23.81
+Observation: Blood pressure panel with all children optional, Value: Unknown value
+Observation: Heart rate, Value: 79
+Observation: Respiratory rate, Value: 16
+Observation: Leukocytes [#/volume] in Blood by Automated count, Value: 5.4164
+Observation: Erythrocytes [#/volume] in Blood by Automated count, Value: 3.9251
+Observation: Hemoglobin [Mass/volume] in Blood, Value: 16.74
+Observation: Hematocrit [Volume Fraction] of Blood by Automated count, Value: 42.656
+Observation: MCV [Entitic volume] by Automated count, Value: 94.846
+Observation: MCH [Entitic mass] by Automated count, Value: 30.566
+Observation: MCHC [Mass/volume] by Automated count, Value: 34.085
+Observation: Erythrocyte distribution width [Entitic volume] by Automated count, Value: 45.583
+Observation: Platelets [#/volume] in Blood by Automated count, Value: 349.05
+Observation: Platelet distribution width [Entitic volume] in Blood by Automated count, Value: 420.44
+Observation: Platelet mean volume [Entitic volume] in Blood by Automated count, Value: 11.145
+Observation: Tobacco smoking status, Value: Unknown value
+Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value
+Observation: Total score [HARK], Value: 0
+Observation: Patient Health Questionnaire 2 item (PHQ-2) total score [Reported], Value: 0
+Medication: Unknown medication, Dosage: Unknown dosage
+Condition: Viral sinusitis (disorder), Onset: 2019-12-22T06:05:47+00:00
+Condition: Injury of neck (disorder), Onset: 2022-07-09T04:05:47+00:00
+Condition: Whiplash injury to neck (disorder), Onset: 2022-07-09T04:05:47+00:00
+Medication: Ibuprofen 200 MG Oral Tablet, Dosage: Take as needed.
+Condition: Reports of violence in the environment (finding), Onset: 2022-08-25T04:54:24+00:00
+Observation: Body Height, Value: 165
+Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 2
+Observation: Body Weight, Value: 69.1
+Observation: Body mass index (BMI) [Ratio], Value: 25.36
+Observation: Blood pressure panel with all children optional, Value: Unknown value
+Observation: Heart rate, Value: 96
+Observation: Respiratory rate, Value: 13
+Observation: Cholesterol [Mass/volume] in Serum or Plasma, Value: 198.48
+Observation: Triglycerides, Value: 104.61
+Observation: Low Density Lipoprotein Cholesterol, Value: 119.81
+Observation: Cholesterol in HDL [Mass/volume] in Serum or Plasma, Value: 57.74
+Observation: Tobacco smoking status, Value: Unknown value
+Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value
+Observation: Patient Health Questionnaire 2 item (PHQ-2) total score [Reported], Value: 1
+Observation: Total score [AUDIT-C], Value: 1
+Condition: Acute viral pharyngitis (disorder), Onset: 2023-06-18T10:05:47+00:00
+Observation: Body temperature, Value: 37.291
+
+
+
+"""
+    You are an assistant with medical knowledge. Use the following FHIR data entries to provide a summarized answer.
+
+    User Query: "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for King743, Bart73 Caleb651"
+
+    Retrieved Data:
+    ("Patient: King743, Bart73 Caleb651, Gender: male, Birth Date: 1991-06-13 Condition: Received higher education (finding), Onset: 2009-08-06T04:44:50+00:00 Condition: Full-time employment (finding), Onset: 2013-08-15T05:05:05+00:00 Condition: Medication review due (situation), Onset: 2016-08-18T04:05:47+00:00 Condition: Not in labor force (finding), Onset: 2016-08-18T05:01:59+00:00 Condition: Reports of violence in the environment (finding), Onset: 2016-08-18T05:01:59+00:00 Observation: Body Height, Value: 165 Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 3 Observation: Body Weight, Value: 60.5 Observation: Body mass index (BMI) [Ratio], Value: 22.22 Observation: Blood pressure panel with all children optional, Value: Unknown value Observation: Heart rate, Value: 96 Observation: Respiratory rate, Value: 15 Observation: Tobacco smoking status, Value: Unknown value Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value Observation: Patient Health Questionnaire 2 item (PHQ-2) total score [Reported], Value: 1 Observation: Total score [DAST-10], Value: 2 Condition: Infection of tooth (disorder), Onset: 2016-09-01T05:25:32+00:00 Medication: Unknown medication, Dosage: Unknown dosage Condition: Viral sinusitis (disorder), Onset: 2017-07-05T23:05:47+00:00 Medication: Amoxicillin 250 MG / Clavulanate 125 MG Oral Tablet, Dosage: Unknown dosage Condition: Full-time employment (finding), Onset: 2019-08-22T04:45:13+00:00 Condition: Stress (finding), Onset: 2019-08-22T04:45:13+00:00 Condition: Victim of intimate partner abuse (finding), Onset: 2019-08-22T04:45:13+00:00 Observation: Body Height, Value: 165 
+Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 2 Observation: Body Weight, Value: 64.8 Observation: Body mass index (BMI) [Ratio], Value: 23.81 Observation: Blood pressure panel with all children optional, Value: Unknown value Observation: Heart rate, Value: 79 Observation: Respiratory rate, Value: 16 Observation: Leukocytes [#/volume] in Blood by Automated count, Value: 5.4164 Observation: Erythrocytes [#/volume] in Blood by Automated count, Value: 3.9251 Observation: Hemoglobin [Mass/volume] in Blood, Value: 16.74 Observation: Hematocrit [Volume Fraction] of Blood by Automated count, Value: 42.656 Observation: MCV [Entitic volume] by Automated count, Value: 94.846 Observation: MCH [Entitic mass] by Automated count, Value: 30.566 Observation: MCHC [Mass/volume] by Automated count, Value: 34.085 Observation: Erythrocyte distribution width [Entitic volume] by Automated count, Value: 45.583 Observation: Platelets [#/volume] in Blood by Automated count, Value: 349.05 Observation: Platelet distribution width [Entitic volume] in Blood by Automated count, Value: 420.44 Observation: Platelet mean volume [Entitic volume] in Blood by Automated count, Value: 11.145 Observation: Tobacco smoking status, Value: Unknown value Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value Observation: Total score [HARK], Value: 0 Observation: Patient Health Questionnaire 2 item (PHQ-2) total score [Reported], Value: 0 Medication: Unknown medication, Dosage: Unknown dosage Condition: Viral sinusitis (disorder), Onset: 2019-12-22T06:05:47+00:00 Condition: Injury of neck (disorder), Onset: 2022-07-09T04:05:47+00:00 Condition: Whiplash injury to neck (disorder), Onset: 2022-07-09T04:05:47+00:00 Medication: Ibuprofen 200 MG Oral Tablet, Dosage: Take as needed. Condition: Reports of violence in the environment (finding), Onset: 2022-08-25T04:54:24+00:00 Observation: Body Height, Value: 165 Observation: Pain severity - 0-10 verbal numeric rating [Score] - Reported, Value: 2 Observation: Body Weight, Value: 69.1 Observation: Body mass index (BMI) [Ratio], Value: 25.36 Observation: Blood pressure panel with all children optional, Value: Unknown value Observation: Heart rate, Value: 96 Observation: Respiratory rate, Value: 13 Observation: Cholesterol [Mass/volume] in Serum or Plasma, Value: 198.48 Observation: Triglycerides, Value: 104.61 Observation: Low Density Lipoprotein Cholesterol, Value: 119.81 Observation: Cholesterol in HDL [Mass/volume] in Serum or Plasma, Value: 57.74 Observation: Tobacco smoking status, Value: Unknown value Observation: Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE], Value: Unknown value Observation: Patient Health Questionnaire 
+2 item (PHQ-2) total score [Reported], Value: 1 Observation: Total score [AUDIT-C], Value: 1 Condition: Acute viral pharyngitis (disorder), Onset: 2023-06-18T10:05:47+00:00 Observation: Body temperature, Value: 37.291", 0.49393454)
+
+    Provide a structured answer relevant to the query.
+    """
