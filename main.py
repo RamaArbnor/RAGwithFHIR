@@ -3,6 +3,7 @@ import os
 import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
+from llm import generate_answer_with_llm
 
 # Path to your FHIR JSON files
 fhir_data_folder = "Dataset"
@@ -95,27 +96,10 @@ def search(query, k=5):
     
     return results
 
-def generate_answer_with_llm(query, retrieved_entries):
-    prompt = f"""
-    You are an assistant with medical knowledge. Use the following FHIR data entries to provide a summarized answer.
-
-    User Query: "{query}"
-
-    Retrieved Data:
-    {retrieved_entries}
-
-    Provide a structured answer relevant to the query.
-    """
-    
-    answer = ''
-    return answer
 
 # Example: Query the index
-query_text = "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for King743, Bart73 Caleb651"
+query_text = "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for  Bart73 "
 top_k_results = search(query_text)
+retrieved_entries = top_k_results[0]
 
-print(top_k_results[0])
-
-# # Print the results
-# for text, distance in top_k_results:
-#     print(f"Distance (Cosine Similarity): {distance:.4f}\n{text}\n")
+print(generate_answer_with_llm(query_text, retrieved_entries))
