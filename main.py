@@ -47,7 +47,7 @@ def extract_text_from_fhir(bundle):
                 name = f"{family_name}, {' '.join(given_names)}"
                 gender = resource.get('gender', 'Unknown')
                 birth_date = resource.get('birthDate', 'Unknown')
-                extracted_text.append(f"Patient: {name}, Gender: {gender}, Birth Date: {birth_date}")
+                extracted_text.append(f"Patient Name: {name}, Gender: {gender}, Birth Date: {birth_date}")
 
             elif resource_type == 'Condition':
                 condition_code = resource.get('code', {}).get('text', 'Unknown condition')
@@ -71,6 +71,13 @@ fhir_data = load_fhir_data(fhir_data_folder)
 
 # Extract text and create embeddings for all FHIR records
 texts = [extract_text_from_fhir(record) for record in fhir_data]
+
+with open('patient0.txt', 'w') as file:
+    file.write(extract_text_from_fhir(fhir_data[0]))
+file.close()
+
+
+
 embeddings = model.encode(texts, show_progress_bar=True)
 
 # Convert embeddings to a numpy array and normalize for cosine similarity
@@ -141,8 +148,19 @@ def generate_answer_with_llm(query, retrieved_entries):
         return f"Error: {response.status_code} - {response.text}"
 
 # Example: Query the index
-query_text = "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for  Bart73 "
-top_k_results = search(query_text)
-retrieved_entries = top_k_results[0]
+# query_text = "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for  Bart73 "
+# top_k_results = search(query_text)
+# retrieved_entries = top_k_results[0]
 
-print(generate_answer_with_llm(query_text, retrieved_entries))
+# print(generate_answer_with_llm(query_text, retrieved_entries))
+
+query_text = input("Query :")
+
+while(query_text != "-1"):
+    top_k_results = search(query_text)
+    retrieved_entries = top_k_results[0]
+
+    print(generate_answer_with_llm(query_text, retrieved_entries))
+    print("\n\n")
+    query_text = input("Query :")
+
