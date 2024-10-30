@@ -5,14 +5,12 @@ import numpy as np
 from sentence_transformers import SentenceTransformer
 import requests
 from dotenv import load_dotenv
-# from llm import generate_answer_with_llm
 
 # Path to your FHIR JSON files
 fhir_data_folder = "Dataset"
 load_dotenv()
 url = "https://api.arliai.com/v1/chat/completions"
 ARLIAI_API_KEY = os.environ.get('API_KEY')
-
 
 # Load all the JSON files in the directory
 def load_fhir_data(folder_path):
@@ -34,7 +32,7 @@ def extract_text_from_fhir(bundle):
     """
     Extract relevant fields based on the FHIR resource type from a Bundle.
     """
-    extracted_text = []
+    extracted_texts = []  # Changed to store individual texts
     
     if bundle.get('resourceType') == 'Bundle' and 'entry' in bundle:
         for entry in bundle['entry']:
@@ -47,37 +45,40 @@ def extract_text_from_fhir(bundle):
                 name = f"{family_name}, {' '.join(given_names)}"
                 gender = resource.get('gender', 'Unknown')
                 birth_date = resource.get('birthDate', 'Unknown')
-                extracted_text.append(f"Patient Name: {name}, Gender: {gender}, Birth Date: {birth_date}")
+                extracted_texts.append(f"Patient Name: {name}, Gender: {gender}, Birth Date: {birth_date}")
 
             elif resource_type == 'Condition':
                 condition_code = resource.get('code', {}).get('text', 'Unknown condition')
                 onset_date = resource.get('onsetDateTime', 'Unknown onset date')
-                extracted_text.append(f"Condition: {condition_code}, Onset: {onset_date}")
+                extracted_texts.append(f"Condition: {condition_code}, Onset: {onset_date}")
 
             elif resource_type == 'MedicationRequest':
                 medication = resource.get('medicationCodeableConcept', {}).get('text', 'Unknown medication')
                 dosage = resource.get('dosageInstruction', [{}])[0].get('text', 'Unknown dosage')
-                extracted_text.append(f"Medication: {medication}, Dosage: {dosage}")
+                extracted_texts.append(f"Medication: {medication}, Dosage: {dosage}")
 
             elif resource_type == 'Observation':
                 observation_type = resource.get('code', {}).get('text', 'Unknown observation')
                 value = resource.get('valueQuantity', {}).get('value', 'Unknown value')
-                extracted_text.append(f"Observation: {observation_type}, Value: {value}")
+                extracted_texts.append(f"Observation: {observation_type}, Value: {value}")
     
-    return " ".join(extracted_text)
+    return extracted_texts  # Return a list of texts
 
 # Load the FHIR data
 fhir_data = load_fhir_data(fhir_data_folder)
 
-# Extract text and create embeddings for all FHIR records
-texts = [extract_text_from_fhir(record) for record in fhir_data]
+# Extract texts for each record and create embeddings for all FHIR records
+texts = []
+for record in fhir_data:
+    extracted_texts = extract_text_from_fhir(record)
+    texts.extend(extracted_texts)  # Flatten the list to include all extracted texts
 
+# Save the first patient's text to a file for reference
 with open('patient0.txt', 'w') as file:
-    file.write(extract_text_from_fhir(fhir_data[0]))
+    file.write("\n".join(extract_text_from_fhir(fhir_data[0])))
 file.close()
 
-
-
+# Create embeddings for each extracted text
 embeddings = model.encode(texts, show_progress_bar=True)
 
 # Convert embeddings to a numpy array and normalize for cosine similarity
@@ -85,7 +86,7 @@ embedding_matrix = np.array(embeddings, dtype='float32')
 faiss.normalize_L2(embedding_matrix)  # Normalize embeddings
 
 # Create a FAISS index using Inner Product for cosine similarity
-d = embedding_matrix.shape[1]  # dimension of the embeddings
+d = embedding_matrix.shape[1]  # Dimension of the embeddings
 index = faiss.IndexFlatIP(d)   # IP for cosine similarity
 index.add(embedding_matrix)    # Add embeddings to the index
 
@@ -113,16 +114,19 @@ def generate_answer_with_llm(query, retrieved_entries):
     payload = json.dumps({
     "model": "Meta-Llama-3.1-8B-Instruct",
     "messages": [
-        {"role": "system", "content": f"""
-        You are an assistant with medical knowledge. Use the following FHIR data entries to provide a summarized answer.
+            {
+            "role": "system",
+            "content": f"""
+            You are an assistant with medical knowledge. Review the provided FHIR data entries and answer the query concisely, drawing only from the information directly relevant to the question.
 
-        User Query: "{query}"
+            User Query: "{query}"
 
-        Retrieved Data:
-        {retrieved_entries}
+            Retrieved Data:
+            {retrieved_entries}
 
-        Provide a structured answer relevant to the query.
-        """},
+            Answer in a structured and clear format, highlighting key information without including unrelated data points.
+            """
+            },
 
     ],
     "repetition_penalty": 1.1,
@@ -148,19 +152,13 @@ def generate_answer_with_llm(query, retrieved_entries):
         return f"Error: {response.status_code} - {response.text}"
 
 # Example: Query the index
-# query_text = "Retrieve information on general health metrics like height, weight, BMI, blood pressure, heart rate, and any recent viral infections for  Bart73 "
-# top_k_results = search(query_text)
-# retrieved_entries = top_k_results[0]
-
-# print(generate_answer_with_llm(query_text, retrieved_entries))
-
 query_text = input("Query :")
 
-while(query_text != "-1"):
+while query_text != "-1":
     top_k_results = search(query_text)
-    retrieved_entries = top_k_results[0]
-
+    retrieved_entries = top_k_results  # Keep all results
+    print(f"\n\nRAG RESULT: {retrieved_entries}")
+    print(f"\n\nQUERY: {query_text}")
     print(generate_answer_with_llm(query_text, retrieved_entries))
     print("\n\n")
     query_text = input("Query :")
-
