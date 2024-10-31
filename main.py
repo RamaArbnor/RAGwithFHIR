@@ -75,9 +75,9 @@ for record in fhir_data:
 
 
 # Save the first patient's text to a file for reference
-# with open('patient0.txt', 'w') as file:
-#     file.write("\n".join(extract_text_from_fhir(fhir_data[0])))
-# file.close()
+with open('patient0.txt', 'w') as file:
+    file.write("\n".join(extract_text_from_fhir(fhir_data[0])))
+file.close()
 
 # Create embeddings for each extracted text
 embeddings = model.encode(texts, show_progress_bar=True)
