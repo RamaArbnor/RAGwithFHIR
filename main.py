@@ -50,17 +50,17 @@ def extract_text_from_fhir(bundle):
             elif resource_type == 'Condition':
                 condition_code = resource.get('code', {}).get('text', 'Unknown condition')
                 onset_date = resource.get('onsetDateTime', 'Unknown onset date')
-                extracted_texts.append(f"Condition: {condition_code}, Onset: {onset_date}")
+                extracted_texts.append(f"Condition for {name}: {condition_code}, Onset: {onset_date}")
 
             elif resource_type == 'MedicationRequest':
                 medication = resource.get('medicationCodeableConcept', {}).get('text', 'Unknown medication')
                 dosage = resource.get('dosageInstruction', [{}])[0].get('text', 'Unknown dosage')
-                extracted_texts.append(f"Medication: {medication}, Dosage: {dosage}")
+                extracted_texts.append(f"Medication for {name}: {medication}, Dosage: {dosage}")
 
             elif resource_type == 'Observation':
                 observation_type = resource.get('code', {}).get('text', 'Unknown observation')
                 value = resource.get('valueQuantity', {}).get('value', 'Unknown value')
-                extracted_texts.append(f"Observation: {observation_type}, Value: {value}")
+                extracted_texts.append(f"Observation for {name}: {observation_type}, Value: {value}")
     
     return extracted_texts  # Return a list of texts
 
@@ -73,10 +73,11 @@ for record in fhir_data:
     extracted_texts = extract_text_from_fhir(record)
     texts.extend(extracted_texts)  # Flatten the list to include all extracted texts
 
+
 # Save the first patient's text to a file for reference
-with open('patient0.txt', 'w') as file:
-    file.write("\n".join(extract_text_from_fhir(fhir_data[0])))
-file.close()
+# with open('patient0.txt', 'w') as file:
+#     file.write("\n".join(extract_text_from_fhir(fhir_data[0])))
+# file.close()
 
 # Create embeddings for each extracted text
 embeddings = model.encode(texts, show_progress_bar=True)
@@ -93,7 +94,7 @@ index.add(embedding_matrix)    # Add embeddings to the index
 print(f"Total records indexed: {index.ntotal}")
 
 # Function to query the index
-def search(query, k=5):
+def search(query, k=10):
     """
     Search for the top-k closest records to the given query.
     """
